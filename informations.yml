@@ -1,0 +1,66 @@
+# vyber ci maju byt hladane niektore údaje
+vyberove:
+  hlavicka: true
+  vek: true
+  doba_hospitalizacie: true
+  vyska_a_vaha: true
+  saturacia: true
+  oxygenoterapia: true
+  smrť: true
+  JIS: true
+
+
+#skúmané lieky
+lieky:
+  Dexametazon: ['dexametason', 'dexametazon', 'dexametazón']
+  remdesivir: ['remdesivir'] 
+  Olumiant: ['olumiant']
+  favipiravir: ['favipiravir']
+  ivermectin: ['ivermectin', 'ivermektin', 'ivermektín']
+  colchicin: ['colchicin', 'kolchicin']
+
+# skúmanená iné diagnózy
+choroby: 
+  Diabetes: ['[\s,\n]DM[\s,\n]', 'Diabetes', 'diabetes', 'Cukrovka', 'cukrovka']
+  AH: ['[\s,\n]AH[\s,\n]', '[\s,\n]AHT[\s,\n]', 'artéri.{3,6}hypertenz', 'Artéri.{3,6}hypertenz', 'arteri.{3,6}hypertenz', 'Arteri.{3,6}hypertenz', 'Art\. hypertenz', 'art\. hypertenz']
+  SZ: ['[\s,\n]SZ[\s,\n]', 'CHSZ', 'ChSZ', 'Srdc.{3,6}zlyh', 'srdc.{3,6}zlyh', 'Srdc.{3,6}Zlyh']
+  IM: ['[\s,\n]IM[\s,\n]', 'Infarkt', 'infarkt', 'infarkt myokard', 'Infarkt myokard', 'STEMI']
+  FP: ['[\s,\n]FP[\s,\n]', '[\s,\n]FiP[\s,\n]', 'fibrilácia', 'Fibrilácia','fibril.{4,7}predsien', 'Fibril.{4,7}predsien']
+  dialýza: ['dialýz', 'Dialýz']
+  PAOO DK: ['PAOO DK', 'PAO DK', 'perifér.{3,6}artér.{4,6}ochoreni.{2,4}doln.{3,5}končat', 'Perifér.{3,6}artér.{4,6}ochoreni.{2,4}doln.{3,5}končat', 'Ateroskleróz', 'ateroskleróz']
+  CHOCHP: ['CHOCHP', 'ChoChP', 'Chronick.{2,4}obštrukčn.{2,4}chorob.{2,4}pľúc']
+  Astma: ['Astm', 'astm', 'Asthm', 'asthm']
+  NCMP: ['NCMP', 'Cievn.{2,4}mozgov.{2,4}príhod', 'cievn.{2,4}mozgov.{2,4}príhod', 'Mozgov.{2,4}príhod', 'mozgov.{2,4}príhod']
+  Demencia: ['Demenc', 'demenc']
+  Sepsa pri hosp: ['Sepsa pri hosp', 'Seps', 'seps']
+  CDI pri hosp: ['CDI pri hosp', 'CDI', 'Kolitíd', 'kolitíd', 'difficile']
+
+# zisťované výsledky krvných testov
+vysledky:
+  CRP: ['CRP']
+  IL-6: ['IL-6', 'IL6']
+  PCT: ['PCT', 'S_Prokalcitonin'] 
+  D vit: ['D vit', 'vitamin D', 'S_D3', '[\s,\n]D3', 'S_Vitamín D total']
+  glukóza na lačno: ['glukóza na lačno', 'glukóza', 'GLU'] 
+  kreatinin: ['kreatinin', 'KREA']
+  ALT: ['ALT']
+  GMT: ['GMT']
+  feritín: ['Feritín', 'S_Ferritín', 'feritín', 'ferritín', 'FERR']
+  TnT: ['TnT', 'Troponín T hs'] 
+  Neu: ['Neu', 'NEU#']
+  Lymfo: ['Lymfo', 'LYM#']
+  Eo: ['Eo', 'EO#']
+  Plt: ['Plt', 'PLT']
+  CD4 abs: ['CD4A', 'CD4 abs.']
+  CD8 abs: ['CD8A', 'CD8 abs.']
+  INR: ['INR']
+  FBG: ['FBG', 'Fibrinogén \(A\)']
+  D-Dim: ['D-Dim', 'DD']
+
+# zisťovanie protilatok
+protilatky:
+  sars: 
+    nazvy_stlpcov: ['IgG pri prijatí', 'IgM pri prijatí']
+    nazvy_ochorenia: ['sars.{0,3}cov.{0,3}2?', 'covid.{0,3}19']
+    nazvy_protilatok: ['igg', 'igm'] 
+
