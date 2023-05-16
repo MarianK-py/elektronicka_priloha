@@ -1,32 +1,11 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[1]:
-
-
 import pandas as pd
 import numpy as np
 import yaml
 import re
 
 
-# In[2]:
-
-
-pacienti = pd.read_excel("Vysledky system.xlsx", sheet_name='Hárok1')
-pacienti.set_index("Rodné číslo", inplace=True) 
-pacienti["Olumiant"] = pacienti["Olumiant"].map({"ano":1, "áno":1, 0:0, 1:1})
-pacienti["BMI"] = (pacienti["váha"]/((pacienti["výška"]/100)**2)).round(1)
-#pacienti["dátum prijatia"] = pacienti["dátum prijatia"].dt.strftime('%d.%m.%Y')
-pacienti["dátum prijatia"] = pd.to_datetime(pacienti["dátum prijatia"], format='%d.%m.%Y')
-#pacienti["datum prepustenia"] = pacienti["datum prepustenia"].dt.strftime('%d.%m.%Y')
-pacienti["datum prepustenia"] = pd.to_datetime(pacienti["datum prepustenia"], format='%d.%m.%Y')
-
 
 # Zoznamy a slovníky pre vyhľadávanie v texte
-
-# In[3]:
-
 
 udaje = {"oxygenoterapia": ["Oxygenoterap", "oxygenoterap",
                             "HFNO", "high-flow", "high flow", "low-flow", "low flow",
@@ -56,9 +35,6 @@ poz = ["poz"]
 neg = ["neg"]
 
 
-# In[4]:
-
-
 with open("informations.yml", "r", encoding='utf8') as f:
     inf = yaml.safe_load(f)
 
@@ -70,9 +46,6 @@ vyber = inf["vyberove"]
 
 
 # Funkcia ktorá v z dataframu spravý text a zavolá vyhľadávacie funkcie
-
-# In[5]:
-
 
 def text_finder(pacient):
     hlavny_text = ""
@@ -162,9 +135,6 @@ def text_finder(pacient):
 
 # Funkcia hľadajúce udaje ako meno, RČ a dobu hospitalizácie 
 
-# In[6]:
-
-
 def osobne_udaje(pacient):
     data = dict()
     problemy = []
@@ -243,9 +213,6 @@ def osobne_udaje(pacient):
 
 # Hľadanie udajov o stave pacienta ako oxygenoterapia/JIS/smrť
 
-# In[22]:
-
-
 def find_stav_pac(text):
     data = dict()
     problemy = []
@@ -284,9 +251,6 @@ def find_stav_pac(text):
 
 
 # Funkcia hľadajúca informácie o protilátkach
-
-# In[8]:
-
 
 def find_protilatky(text, ochorenie):
     out = []
@@ -393,9 +357,6 @@ def find_protilatky(text, ochorenie):
 
 # Zisťovanie pozitivity/negativity 
 
-# In[9]:
-
-
 def poz_alebo_neg(vysl):
     pozit = []
     negat = []
@@ -440,9 +401,6 @@ def pozicie_testov(rozdel_test, proti):
 
 
 # Hľadanie výseldkov jendého protilátkového testu
-
-# In[11]:
-
 
 def vysledky_testov(IgM, IgG, rozdel_test):
     pocet_casti = len(rozdel_test)
@@ -505,9 +463,6 @@ def vysledky_testov(IgM, IgG, rozdel_test):
 
 # Hľadanie výšky/váhy
 
-# In[12]:
-
-
 def find_vys_vah(text):
     data = dict()
     problemy = []
@@ -540,9 +495,6 @@ def find_vys_vah(text):
 
 # Hľadanie saturácie
 
-# In[13]:
-
-
 def find_saturacia(text):
     data = dict()
     problemy = []
@@ -573,9 +525,6 @@ def find_saturacia(text):
 
 # Hľadanie liekov
 
-# In[14]:
-
-
 def find_lieky(text):
     text = text.lower()
     data = dict()
@@ -593,9 +542,6 @@ def find_lieky(text):
 
 
 # Hľadanie vysledkov krvných testov
-
-# In[15]:
-
 
 def find_vysledky(text, vysledky_input):
     data = dict()
@@ -642,9 +588,6 @@ def find_vysledky(text, vysledky_input):
 
 # Hľadanie chorôb u pacienta
 
-# In[16]:
-
-
 def find_choroby(text):
     data = dict()
     problemy = []
@@ -671,9 +614,6 @@ def find_choroby(text):
 
 # Špeciálna kontrola pri kolitide
 
-# In[17]:
-
-
 def kolitida_kontrola(text):
     pozit = []
     negat = []
@@ -692,9 +632,6 @@ def kolitida_kontrola(text):
 
 
 # Pridávanie dových výsledkov do hlavného dataframu (vypisovanie problémov) (vstup čísla harkov)
-
-# In[18]:
-
 
 def pridavanie_udajov(citany_subor, zapisovaci_subor,a, b):
     pacienti = pd.read_excel(zapisovaci_subor, sheet_name='Hárok1')
@@ -760,66 +697,6 @@ def pridavanie_udajov(citany_subor, zapisovaci_subor,a, b):
     pacienti.to_excel(zapisovaci_subor, sheet_name="Hárok1",index = False)
 
 
-# In[19]:
+#pridavanie_udajov("Pacienti.xlsx", "Vysledky system.xlsx", 1, 101)
 
-
-from time import perf_counter
-
-
-# In[20]:
-
-
-#pridavanie_udajov("Antivirotika KIGM COVID-19.xlsx", "Antivirotika KIGM COVID-19 doplnene.xlsx",2, 384)
-#pridavanie_udajov("Antivirotika 2 KIGM COVID-19.xlsx", "Antivirotika KIGM COVID-19 doplnene.xlsx",1, 107)
-#pridavanie_udajov("Antivirotika 2 KIGM COVID-19.xlsx", "Antivirotika KIGM COVID-19 doplnene special_2.xlsx",1, 107)
-t = 0
-for i in range(10):
-    s = perf_counter()
-    #pridavanie_udajov("Pacienti.xlsx", "Vysledky system.xlsx", 1, 101)
-    e = perf_counter()
-    print(e-s)
-    t += e-s
-print(t/10)
-
-
-# In[23]:
-
-
-pridavanie_udajov("Pacienti.xlsx", "Vysledky system.xlsx", 1, 101)
-
-
-# In[ ]:
-
-
-pacient = pd.read_excel("Pacienti.xlsx", sheet_name=f"Hárok{2}")
-
-hlavny_text = ""
-imuno_text = ""
-data = dict()
-data_temp = dict()
-problemy = []
-problemy_temp = []
-nenajdene = dict()
-
-start_imuno = False
-for index, value in pacient.iloc[:,0].items():
-    if(value == "Imunologické vyš.:"):
-        start_imuno = True
-    if(type(value) !=  float):
-        if start_imuno:
-            imuno_text += str(value)+"\n"
-        else:
-            hlavny_text += str(value)+"\n"
-
-
-# In[ ]:
-
-
-find_choroby(hlavny_text)
-
-
-# In[ ]:
-
-
-re.findall('hypertenz',hlavny_text)
 
